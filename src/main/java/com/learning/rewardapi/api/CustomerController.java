@@ -1,17 +1,36 @@
 package com.learning.rewardapi.api;
 
 import com.learning.rewardapi.service.CustomerService;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.learning.rewardapi.model.Customer;
 
+@RequestMapping("/api/v1/customer")
+@RestController
 public class CustomerController {
 
     private final CustomerService customerService;
 
+    @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
     
-    public void addCustomer(Customer customer){
+    @PostMapping
+    public void addCustomer(@RequestBody Customer customer){
         customerService.addCustomer(customer);
+    }
+
+    @GetMapping
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 }

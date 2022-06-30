@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.stereotype.Repository;
+
 import com.learning.rewardapi.model.Customer;
 
+@Repository("fakeDao")
 public class FakeCustomerDataAccessService implements CustomerDao {
     
     private static List<Customer> DB = new ArrayList<>();
@@ -13,6 +16,11 @@ public class FakeCustomerDataAccessService implements CustomerDao {
     @Override
     public int insertCustomer(UUID id, Customer customer){
         DB.add(new Customer(id, customer.getName()));
-        return 0;
+        return 1;
+    }
+
+    @Override
+    public List<Customer> selectAllCustomers() {
+        return DB;
     }
 }

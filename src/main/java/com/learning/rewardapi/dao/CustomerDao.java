@@ -1,5 +1,6 @@
 package com.learning.rewardapi.dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.learning.rewardapi.model.Customer;
@@ -13,5 +14,5 @@ public interface CustomerDao {
         return insertCustomer(id, customer);
     }
 
-
+    List<Customer> selectAllCustomers();
 }
