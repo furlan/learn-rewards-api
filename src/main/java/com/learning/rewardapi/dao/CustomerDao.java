@@ -1,6 +1,7 @@
 package com.learning.rewardapi.dao;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.learning.rewardapi.model.Customer;
@@ -15,4 +16,10 @@ public interface CustomerDao {
     }
 
     List<Customer> selectAllCustomers();
+
+    Optional<Customer> selectCustomerById(UUID id);
+
+    int deleteCustomerById(UUID id);
+
+    int updateCustomerById(UUID id);
 }

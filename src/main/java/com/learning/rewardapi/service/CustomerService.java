@@ -1,6 +1,8 @@
 package com.learning.rewardapi.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +27,10 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() {
         return customerDao.selectAllCustomers();
+    }
+
+    public Optional<Customer> getCustomerById(UUID id){
+        return customerDao.selectCustomerById(id);
     }
     
 }
