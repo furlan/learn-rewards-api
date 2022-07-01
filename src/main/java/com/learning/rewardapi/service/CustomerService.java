@@ -32,5 +32,13 @@ public class CustomerService {
     public Optional<Customer> getCustomerById(UUID id){
         return customerDao.selectCustomerById(id);
     }
+
+    public int deleteCustomerById(UUID id) {
+        return customerDao.deleteCustomerById(id);
+    }
+
+    public int updateCustomerById(UUID id, Customer changeCustomer) {
+        return customerDao.updateCustomerById(id, changeCustomer);
+    }
     
 }

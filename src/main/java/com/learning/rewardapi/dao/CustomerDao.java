@@ -21,5 +21,5 @@ public interface CustomerDao {
 
     int deleteCustomerById(UUID id);
 
-    int updateCustomerById(UUID id);
+    int updateCustomerById(UUID id, Customer customer);
 }
