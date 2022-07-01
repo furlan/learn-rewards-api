@@ -5,6 +5,9 @@ import com.learning.rewardapi.service.CustomerService;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +32,7 @@ public class CustomerController {
     }
     
     @PostMapping
-    public void addCustomer(@RequestBody Customer customer){
+    public void addCustomer(@Valid @NotNull @RequestBody Customer customer){
         customerService.addCustomer(customer);
     }
 
@@ -50,7 +53,7 @@ public class CustomerController {
     }
 
     @PutMapping(path = "{id}")
-    public void updateCustomerById(@PathVariable("id") UUID id, @RequestBody Customer changeCustomer){
+    public void updateCustomerById(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Customer changeCustomer){
         customerService.updateCustomerById(id, changeCustomer);
     }
 }
