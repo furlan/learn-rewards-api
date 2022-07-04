@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.rewardapi.model.Customer;
+import com.learning.rewardapi.model.Transaction;
 
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/")
 @RestController
 public class CustomerController {
 
@@ -31,29 +32,34 @@ public class CustomerController {
         this.customerService = customerService;
     }
     
-    @PostMapping
+    @PostMapping("customer")
     public void addCustomer(@Valid @NotNull @RequestBody Customer customer){
         customerService.addCustomer(customer);
     }
 
-    @GetMapping
+    @GetMapping("customer")
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
 
-    @GetMapping(path = "{id}")
+    @GetMapping("customer/{id}")
     public Customer getCustomerById(@PathVariable("id") UUID id) {
         return customerService.getCustomerById(id)
                  .orElse(null);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping("customer/{id}")
     public void deleteCustomerById(@PathVariable("id") UUID id) {
         customerService.deleteCustomerById(id);
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping("customer/{id}")
     public void updateCustomerById(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Customer changeCustomer){
         customerService.updateCustomerById(id, changeCustomer);
+    }
+
+    @PostMapping("customer/{id}/transactions")
+    public void addTransaction(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Transaction transaction) {
+        customerService.addTransaction(id, transaction);
     }
 }

@@ -1,5 +1,6 @@
 package com.learning.rewardapi.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.learning.rewardapi.dao.CustomerDao;
 import com.learning.rewardapi.model.Customer;
+import com.learning.rewardapi.model.Reward;
+import com.learning.rewardapi.model.Transaction;
 
 @Service
 public class CustomerService {
@@ -17,7 +20,7 @@ public class CustomerService {
     private final CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(@Qualifier("fakeDao") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("fakeCustomerDao") CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
@@ -39,6 +42,20 @@ public class CustomerService {
 
     public int updateCustomerById(UUID id, Customer changeCustomer) {
         return customerDao.updateCustomerById(id, changeCustomer);
+    }
+
+    public int addTransaction(UUID id, Transaction transaction) {
+        Optional<Customer> customerMaybe = customerDao.selectCustomerById(transaction.getCustomerId());
+        if (customerMaybe.isEmpty()) {
+            return 0;
+        }
+        Customer customer = customerMaybe.get();
+        Reward reward = customer.getReward();
+        BigDecimal rewardValue = reward.getRewardValue(transaction.getValue());
+        transaction.setRewardValue(rewardValue);
+        //to-do: save
+        
+        return 0;
     }
     
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.learning.rewardapi.model.Customer;
 
-@Repository("fakeDao")
+@Repository("fakeCustomerDao")
 public class FakeCustomerDataAccessService implements CustomerDao {
     
     private static List<Customer> DB = new ArrayList<>();
