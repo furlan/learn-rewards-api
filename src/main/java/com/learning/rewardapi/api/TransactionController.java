@@ -33,6 +33,7 @@ public class TransactionController {
     @PostMapping("transaction")
     public void insertTransaction(@Valid @NotNull Transaction transaction){
         transactionService.insertTransaction(transaction);
+        System.out.println("transaction direct");
     }
 
     @GetMapping("transaction")

@@ -61,5 +61,6 @@ public class CustomerController {
     @PostMapping("customer/{id}/transactions")
     public void addTransaction(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Transaction transaction) {
         customerService.insertTransaction(id, transaction);
+        System.out.println("transactions added.");
     }
 }
