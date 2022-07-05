@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.learning.rewardapi.dao.CustomerDao;
+import com.learning.rewardapi.dao.TransactionDao;
 import com.learning.rewardapi.model.Customer;
 import com.learning.rewardapi.model.Reward;
 import com.learning.rewardapi.model.Transaction;
@@ -18,13 +19,16 @@ import com.learning.rewardapi.model.Transaction;
 public class CustomerService {
     
     private final CustomerDao customerDao;
+    private final TransactionDao transactionDao;
 
     @Autowired
-    public CustomerService(@Qualifier("fakeCustomerDao") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("fakeCustomerDao") CustomerDao customerDao, 
+                           @Qualifier("fakeTransactionDao") TransactionDao transactionDao) {
         this.customerDao = customerDao;
+        this.transactionDao = transactionDao;
     }
 
-    public int addCustomer(Customer customer){
+    public int insertCustomer(Customer customer){
         return customerDao.insertCustomer(customer);
     }
 
@@ -44,7 +48,7 @@ public class CustomerService {
         return customerDao.updateCustomerById(id, changeCustomer);
     }
 
-    public int addTransaction(UUID id, Transaction transaction) {
+    public int insertTransaction(UUID id, Transaction transaction) {
         Optional<Customer> customerMaybe = customerDao.selectCustomerById(transaction.getCustomerId());
         if (customerMaybe.isEmpty()) {
             return 0;
@@ -54,8 +58,7 @@ public class CustomerService {
         BigDecimal rewardValue = reward.getRewardValue(transaction.getValue());
         transaction.setRewardValue(rewardValue);
         //to-do: save
-        
-        return 0;
+        return transactionDao.insertTransaction(transaction);
     }
     
 }

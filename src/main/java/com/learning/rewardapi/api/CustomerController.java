@@ -34,7 +34,7 @@ public class CustomerController {
     
     @PostMapping("customer")
     public void addCustomer(@Valid @NotNull @RequestBody Customer customer){
-        customerService.addCustomer(customer);
+        customerService.insertCustomer(customer);
     }
 
     @GetMapping("customer")
