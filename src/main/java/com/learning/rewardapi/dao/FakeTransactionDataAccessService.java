@@ -17,7 +17,7 @@ public class FakeTransactionDataAccessService implements TransactionDao {
 
     @Override
     public int insertTransaction(UUID id, Transaction transaction){
-        DB.add(new Transaction(id, transaction.getCustomerId(), transaction.getDate(), transaction.getValue()));
+        DB.add(new Transaction(id, transaction.getCustomerId(), transaction.getDate(), transaction.getValue(), transaction.getRewardValue()));
         return 1;
     }
 
@@ -49,7 +49,7 @@ public class FakeTransactionDataAccessService implements TransactionDao {
                 .map(transaction -> {
                     int indexOfTransactionToUpdate = DB.indexOf(transaction);
                     if (indexOfTransactionToUpdate >= 0) {
-                        DB.set(indexOfTransactionToUpdate, new Transaction(id, changeTransaction.getCustomerId(), changeTransaction.getDate(), changeTransaction.getValue()));
+                        DB.set(indexOfTransactionToUpdate, new Transaction(id, changeTransaction.getCustomerId(), changeTransaction.getDate(), changeTransaction.getValue(), changeTransaction.getRewardValue()));
                         return 1;
                     }
                     return 0;

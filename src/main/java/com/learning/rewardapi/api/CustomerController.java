@@ -33,8 +33,8 @@ public class CustomerController {
     }
     
     @PostMapping("customer")
-    public void insertCustomer(@Valid @NotNull @RequestBody Customer customer){
-        customerService.insertCustomer(customer);
+    public UUID insertCustomer(@Valid @NotNull @RequestBody Customer customer){
+        return customerService.insertCustomer(customer);
     }
 
     @GetMapping("customer")
@@ -61,6 +61,5 @@ public class CustomerController {
     @PostMapping("customer/{id}/transactions")
     public void addTransaction(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Transaction transaction) {
         customerService.insertTransaction(id, transaction);
-        System.out.println("transactions added.");
     }
 }

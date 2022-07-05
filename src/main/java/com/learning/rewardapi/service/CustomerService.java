@@ -28,7 +28,7 @@ public class CustomerService {
         this.transactionDao = transactionDao;
     }
 
-    public int insertCustomer(Customer customer){
+    public UUID insertCustomer(Customer customer){
         return customerDao.insertCustomer(customer);
     }
 
@@ -49,15 +49,15 @@ public class CustomerService {
     }
 
     public int insertTransaction(UUID id, Transaction transaction) {
-        Optional<Customer> customerMaybe = customerDao.selectCustomerById(transaction.getCustomerId());
+        Optional<Customer> customerMaybe = customerDao.selectCustomerById(id);
         if (customerMaybe.isEmpty()) {
             return 0;
         }
         Customer customer = customerMaybe.get();
+        transaction.setCustomerId(id);
         Reward reward = customer.getReward();
         BigDecimal rewardValue = reward.getRewardValue(transaction.getValue());
         transaction.setRewardValue(rewardValue);
-        //to-do: save
         return transactionDao.insertTransaction(transaction);
     }
     

@@ -15,9 +15,9 @@ public class FakeCustomerDataAccessService implements CustomerDao {
     private static List<Customer> DB = new ArrayList<>();
 
     @Override
-    public int insertCustomer(UUID id, Customer customer){
+    public UUID insertCustomer(UUID id, Customer customer){
         DB.add(new Customer(id, customer.getName()));
-        return 1;
+        return id;
     }
 
     @Override
