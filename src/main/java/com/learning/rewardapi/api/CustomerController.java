@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learning.rewardapi.model.Customer;
+import com.learning.rewardapi.model.RewardMonth;
 import com.learning.rewardapi.model.Transaction;
 
 @RequestMapping("/api/v1/")
@@ -61,5 +62,15 @@ public class CustomerController {
     @PostMapping("customer/{id}/transactions")
     public void addTransaction(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Transaction transaction) {
         customerService.insertTransaction(id, transaction);
+    }
+
+    @GetMapping("customer/{id}/transactions")
+    public List<Transaction> getTransactionsByCustomerId(@PathVariable("id") UUID id){
+        return customerService.getTransactionsByCustomerId(id);
+    }
+
+    @GetMapping("customer/{id}/rewardmonths")
+    public List<RewardMonth> getRewardMonthsByCustomerId(@PathVariable("id") UUID id){
+        return customerService.getRewardMonthsByCustomerId(id);
     }
 }

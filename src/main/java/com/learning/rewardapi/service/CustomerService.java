@@ -1,6 +1,10 @@
 package com.learning.rewardapi.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,6 +17,7 @@ import com.learning.rewardapi.dao.CustomerDao;
 import com.learning.rewardapi.dao.TransactionDao;
 import com.learning.rewardapi.model.Customer;
 import com.learning.rewardapi.model.Reward;
+import com.learning.rewardapi.model.RewardMonth;
 import com.learning.rewardapi.model.Transaction;
 
 @Service
@@ -59,6 +64,39 @@ public class CustomerService {
         BigDecimal rewardValue = reward.getRewardValue(transaction.getValue());
         transaction.setRewardValue(rewardValue);
         return transactionDao.insertTransaction(transaction);
+    }
+
+    public List<Transaction> getTransactionsByCustomerId(UUID id){
+        return transactionDao.selectTransactionsByCustomerId(id);
+    }
+
+    public List<RewardMonth> getRewardMonthsByCustomerId(UUID id){
+        List<Transaction> transactions = transactionDao.selectTransactionsByCustomerId(id);
+        List<RewardMonth> rewards = new ArrayList<RewardMonth>();
+        
+        // Using HashMap to summarize total by months (already sorted)
+        HashMap<Integer, BigDecimal> months = new HashMap<Integer, BigDecimal>();
+        
+        Integer month = 0;
+        BigDecimal rewardValue = BigDecimal.ZERO;
+
+        for (Transaction transaction: transactions){
+            month = transaction.getDate().getDayOfMonth();
+            if (months.get(month) == null){
+                rewardValue = transaction.getRewardValue();
+            } else {
+                rewardValue = months.get(month).add(transaction.getRewardValue());
+                
+            };
+            months.put(month, rewardValue);
+        }
+        
+        for (Integer key : months.keySet()){
+            rewards.add(new RewardMonth(id, key, months.get(key)));
+        }
+
+        return rewards;
+            
     }
     
 }
