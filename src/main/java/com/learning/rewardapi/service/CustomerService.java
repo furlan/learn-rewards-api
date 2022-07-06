@@ -73,7 +73,6 @@ public class CustomerService {
     public List<RewardMonth> getRewardMonthsByCustomerId(UUID id){
         List<Transaction> transactions = transactionDao.selectTransactionsByCustomerId(id);
         List<RewardMonth> rewards = new ArrayList<RewardMonth>();
-        //ArrayList<Integer> sortedMonths = new ArrayList<Integer>();
         
         // Using HashMap to summarize total by months (already sorted)
         HashMap<Integer, BigDecimal> months = new HashMap<Integer, BigDecimal>();
@@ -85,14 +84,13 @@ public class CustomerService {
             month = transaction.getDate().getDayOfMonth();
             if (months.get(month) == null){
                 rewardValue = transaction.getRewardValue();
-                //sortedMonths.add(month);
             } else {
                 rewardValue = months.get(month).add(transaction.getRewardValue());
                 
             };
-            months.put(month, transaction.getRewardValue());
+            months.put(month, rewardValue);
         }
-
+        
         for (Integer key : months.keySet()){
             rewards.add(new RewardMonth(id, key, months.get(key)));
         }
