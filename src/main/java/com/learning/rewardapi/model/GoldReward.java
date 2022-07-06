@@ -12,7 +12,7 @@ public class GoldReward implements Reward {
         // 1 point for every dollar spent over $50
         final BigDecimal onePointLimit = new BigDecimal("50");
 
-        BigDecimal rewardValue = new BigDecimal("0");
+        BigDecimal rewardValue = BigDecimal.ZERO;
 
         if (transactionValue.compareTo(twoPointLimit) == 1) {
             //rewardValue += 2 * (transactionValue - twoPointLimit) + (1 * onePointLimit);
