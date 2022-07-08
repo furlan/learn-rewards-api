@@ -32,6 +32,10 @@ The reward is associated to the customer and customers could have different type
 
 A class is responsible to implement the reward with the specific rule.
 
+Each class implements the specific reward rule.
+
+![Model diagram](/Model.jpg)
+
 ### Reward Response
 
 This an example of reward response:
